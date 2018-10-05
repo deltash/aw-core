@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import List, Dict, Optional
 from datetime import datetime, timezone
 
@@ -24,7 +25,7 @@ class MongoDBStorage(AbstractStorage):
     def __init__(self, testing) -> None:
         self.logger = logger.getChild(self.sid)
 
-        self.client = pymongo.MongoClient(serverSelectionTimeoutMS=5000)
+        self.client = pymongo.MongoClient(os.environ["MONGO_URL"])
         # Try to connect to the server to make sure that it's available
         # If it isn't, it will raise pymongo.errors.ServerSelectionTimeoutError
         self.client.server_info()
